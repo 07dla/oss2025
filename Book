@@ -1,0 +1,29 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Book {
+    private:
+     string title;
+     string author;
+    public:
+     Book();
+     Book(string t, string a);
+     string print();
+};
+
+Book::Book() : title("제목없음"), author("작자미상") { cout << "나 태어났다!" << endl; }
+Book::Book(string t, string a) : title(t), author(a) { cout << "나도 태어났다!" << endl; }
+inline string Book::print() {
+    return title + " " + author;
+}
+
+int main()
+{
+    Book a, b("데미안","헤르만 헤세");
+
+    cout << a.print() << endl;  // 제목없음 작자미상  이렇게 출력  (파이썬의 __str__() 메소드 역할을 하는 멤버함수)
+    cout << b.print() << endl;  // 데미안 헤르만헤세  이렇게 출력
+
+    return 0;
+}
