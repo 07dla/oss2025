@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+#include <locale>
+#include <codecvt>
+#include <windows.h>
+using namespace std;
+
+class Person {
+private:
+    string name;
+
+    wstring to_wstring(const string& str) const {
+        try {
+            wstring_convert<codecvt_utf8<wchar_t>> converter;
+            return converter.from_bytes(str);
+        } catch (const std::range_error& e) {
+            return L"";
+        }
+    }
+
+public:
+    Person(const string& initialName) {
+        name = initialName;
+    }
+
+    ~Person() {
+        cout << "name destroyed" << endl;
+    }
+
+    string getName() const {
+        return name;
+    }
+
+    void setName(const string& newName) {
+        wstring oldNameW = to_wstring(name);
+        wstring newNameW = to_wstring(newName);
+
+        if (!oldNameW.empty() && !newNameW.empty() && oldNameW[0] == newNameW[0]) {
+            name = newName;
+            cout << newName << "(으)로 변경 완료" << endl;
+        } else {
+            cout << "Family name change not allowed." << endl;
+        }
+    }
+};
+
+int main() {  
+    SetConsoleOutputCP(CP_UTF8);
+
+    Person person(u8"고길동");
+    cout << "원래 이름: " + person.getName() << endl;
+    person.setName(u8"곡식");
+    person.setName(u8"고구마");
+    person.setName(u8"박길동");
+    cout << "최종 이름: " + person.getName() << endl;
+ 
+    return 0;
+}
