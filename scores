@@ -1,0 +1,49 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    ifstream fin("scores.txt");
+
+    if (!fin) {
+        cerr << "Error opening scores.txt" << endl;
+        return 1;
+    }
+
+    string name;
+    double score;
+    double total = 0;
+    double maxScore = -100.0;
+    string maxScoreStudent;
+    int count = 0;
+
+    while (fin >> name >> score) {
+        total += score;
+        if (score > maxScore) {
+            maxScore = score;
+            maxScoreStudent = name;
+        }
+        count++;
+    }
+    fin.close();
+    
+    double average = total / count;
+
+    ofstream fout("result.txt");
+    if (!fout) {
+        cerr << "Error opening result.txt" << endl;
+        return 1;
+    }
+    fout << fixed << setprecision(2);
+    fout << "총 " << count << " 명" << endl;
+    fout << "합계: " << total << endl;
+    fout << "평균: " << average << endl;
+    fout << "최고점: " << maxScoreStudent << " " << maxScore << endl;
+
+    fout.close();
+    cout << "Results saved in result.txt." << endl;
+
+    return 0;
+}
