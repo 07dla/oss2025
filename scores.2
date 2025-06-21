@@ -1,0 +1,32 @@
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <cassert>
+using namespace std;
+
+int main() {  
+  ifstream fin("scores.txt");
+  ofstream fout("result.txt");
+  assert(fin && fout);
+
+  string name;
+  double arr[100];
+  int count=0;
+  while(fin >> name >> arr[count]) { 
+    count++;
+    if (count >= 99) break; 
+  }
+  cout << "... 파일 읽어서 총" << count << "명 배열에 저장" << endl;
+
+  sort(arr, arr+count,greater<double>());
+  cout << "...배열 정렬" << endl;
+
+  for (int i = 0; i < count; i++) {
+    fout << arr[i] << endl;
+  }
+  cout << "... result.txt 에 결과 저장" << endl;
+
+  fin.close();  
+  fout.close();
+  return 0;
+}
