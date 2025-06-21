@@ -1,0 +1,29 @@
+ #include <iostream>
+ using namespace std;
+
+class Bread {
+    public: 
+    int x, y;
+    static int s;
+};   
+int Bread::s = 777;
+
+int gi; // 전역정수변수(global)
+Bread gb;  // 전역객체변수
+
+int main() { 
+    int li;  // 지역정수변수(local)
+    Bread lb;   // 지역객체변수
+    
+    int* pi = new int;   // 동적할당된정수변수
+    Bread* pb = new Bread;  // 동적할당된객체변수
+    
+    cout << "전역 ==> " << &gi << ' ' << &(gb.x) << ' ' << &(gb.y) << endl;  
+    cout << "지역 ==> " << &li << ' ' << &(lb.x) << ' ' << &(lb.y) << endl;
+    cout << "동적 ==> " << pi << ' ' << &(pb->x) << ' ' << &(pb->y) << endl;
+    cout << "포인터 자체 ==> " << &pi << ' ' << &pb << endl;
+    cout << "static ==> " << &(gb.s) << ' ' << &(lb.s) << ' ' << &(pb->s) << endl;
+    
+    delete pi;    delete pb;
+    return 0;
+}
